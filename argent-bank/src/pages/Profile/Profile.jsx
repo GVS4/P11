@@ -1,29 +1,33 @@
-import logo from "/images/argentBankLogo.webp"
+import { useEffect } from "react";
+import { Helmet } from "react-helmet";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUserInfo } from "../../actions/userActions";
+import isEmpty from "../../Utils/isEmpty";
 
+const Profile = () => {
+  const dispatch = useDispatch();
+  const { token, userInfo } = useSelector(state => state.user);
 
+  useEffect(() => {
+    const storedToken = localStorage.getItem("token");
+    const tokenToUse = storedToken || token;
+    tokenToUse && dispatch(fetchUserInfo(tokenToUse));
+  }, [token, dispatch]);
 
-function Profile() {
   return (
     <>
-      <nav className="main-nav">
-        <a className="main-nav-logo" href="./">
-          <img className="main-nav-logo-image" src={logo} alt="Argent Bank Logo" />
-          <h1 className="sr-only">Argent Bank</h1>
-        </a>
-        <div>
-          <a className="main-nav-item" href="./profile">
-            <i className="fa fa-user-circle"></i>
-            Tony
-          </a>
-          <a className="main-nav-item" href="./">
-            <i className="fa fa-sign-out"></i>
-            Sign Out
-          </a>
-        </div>
-      </nav>
+      <Helmet>
+        <title>Argent Bank - Profile Page</title>
+      </Helmet>
+
+      {!isEmpty(userInfo) && ( 
       <main className="main bg-dark">
         <div className="header">
-          <h1>Welcome back<br />Tony Jarvis!</h1>
+          <h1>
+            Welcome back
+            <br />
+            {userInfo.firstName} {userInfo.lastName}!
+          </h1>
           <button className="edit-button">Edit Name</button>
         </div>
         <h2 className="sr-only">Accounts</h2>
@@ -58,11 +62,9 @@ function Profile() {
           </div>
         </section>
       </main>
-      <footer className="footer">
-        <p className="footer-text">Copyright 2020 Argent Bank</p>
-      </footer>
+      )}
     </>
   );
-}
+};
 
 export default Profile;
