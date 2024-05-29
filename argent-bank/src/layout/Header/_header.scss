@@ -7,10 +7,32 @@
   a {
     font-weight: bold;
     color: #2c3e50;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
 
   a.router-link-exact-active {
     color: #42b983;
+  }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+  }
+
+  .user-info {
+    display: flex;
+    align-items: center;
+    margin-right: 1rem;
+    font-weight: bold;
+    color: #2c3e50;
+
+    svg {
+      margin-right: 0.5rem;
+    }
   }
 }
 
@@ -28,6 +50,9 @@
   text-decoration: none;
   margin-right: 0.5rem;
   cursor: pointer;
+
+  display: flex;
+  align-items: center;
 
   &:hover {
     text-decoration: underline;
