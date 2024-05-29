@@ -12,9 +12,7 @@ export const loginSuccess = (token) => ({
 
 export const logout = () => {
   localStorage.removeItem("token");
-  return {
-    type: LOGOUT,
-  };
+  return { type: LOGOUT };
 };
 
 export const fetchUserInfoSuccess = (userInfo) => ({
@@ -22,36 +20,27 @@ export const fetchUserInfoSuccess = (userInfo) => ({
   payload: userInfo,
 });
 
-// Thunk action pour la connexion
-export const loginUser =
-  ({ email, password, rememberMe }) =>
-  async (dispatch) => {
-    try {
-      const response = await fetch(LOGIN_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
+// Thunk actions
+export const loginUser = ({ email, password, rememberMe }) => async (dispatch) => {
+  try {
+    const response = await fetch(LOGIN_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
 
-      if (!response.ok) {
-        throw new Error("Failed to login");
-      }
+    if (!response.ok) throw new Error("Failed to login");
 
-      const data = await response.json();
-      dispatch(loginSuccess(data.body.token));
+    const data = await response.json();
+    dispatch(loginSuccess(data.body.token));
 
-      if (rememberMe) {
-        localStorage.setItem("token", data.body.token);
-      }
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
-  };
+    if (rememberMe) localStorage.setItem("token", data.body.token);
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
 
-// Thunk action pour récupérer les informations utilisateur
 export const fetchUserInfo = (token) => async (dispatch) => {
   try {
     const response = await fetch(PROFILE_URL, {
@@ -62,12 +51,31 @@ export const fetchUserInfo = (token) => async (dispatch) => {
       },
     });
 
-    if (!response.ok) {
-      throw new Error("Failed to fetch user info");
-    }
+    if (!response.ok) throw new Error("Failed to fetch user info");
 
     const data = await response.json();
-    dispatch(fetchUserInfoSuccess(data.body)); 
+    dispatch(fetchUserInfoSuccess(data.body));
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+export const updateUserProfile = ({ userName, token }) => async (dispatch) => {
+  try {
+    const response = await fetch(PROFILE_URL, {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ userName }),
+    });
+
+    if (!response.ok) throw new Error("Failed to update profile");
+
+    const data = await response.json();
+    dispatch(fetchUserInfoSuccess(data.body));
   } catch (error) {
     console.error(error);
     throw error;
