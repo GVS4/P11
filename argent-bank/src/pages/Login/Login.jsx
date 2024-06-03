@@ -41,28 +41,20 @@ const Login = () => {
           <form ref={formRef} onSubmit={handleSubmit}>
             <div className="input-wrapper">
               <label htmlFor="email">Email</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                required
-              />
+              <input type="email" id="email" name="email" required />
             </div>
             <div className="input-wrapper">
               <label htmlFor="password">Password</label>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                required
-              />
+              <input type="password" id="password" name="password" required />
             </div>
             <div className="input-remember">
               <input type="checkbox" id="remember-me" name="remember-me" />
               <label htmlFor="remember-me">Remember me</label>
             </div>
             {error && <p className="error">{error}</p>}
-            <button type="submit" className="sign-in-button">Sign In</button>
+            <button type="submit" className="sign-in-button">
+              Sign In
+            </button>
           </form>
         </section>
       </main>

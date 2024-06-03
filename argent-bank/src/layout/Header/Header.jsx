@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSignOutAlt, faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSignOutAlt, faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import logo from "../../../public/images/argentBankLogo.webp";
 import { logout } from "../../actions/userActions";
 
@@ -30,7 +30,8 @@ const Header = () => {
           {isAuthenticated ? (
             <>
               <Link to="/profile" className="user-info">
-                <FontAwesomeIcon icon={faUserCircle} /> {userInfo?.userName || userInfo?.firstName}
+                <FontAwesomeIcon icon={faUserCircle} />{" "}
+                {userInfo?.userName || userInfo?.firstName}
               </Link>
               <a className="main-nav-item" onClick={handleSignOut}>
                 <FontAwesomeIcon icon={faSignOutAlt} /> Sign Out

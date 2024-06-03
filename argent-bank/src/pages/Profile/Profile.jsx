@@ -3,6 +3,7 @@ import { Helmet } from "react-helmet";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUserInfo, updateUserProfile } from "../../actions/userActions";
 import isEmpty from "../../Utils/isEmpty";
+import AccountItem from "../../components/Accountitem";
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -72,18 +73,7 @@ const Profile = () => {
           </div>
           <h2 className="sr-only">Accounts</h2>
           {["Checking", "Savings", "Credit Card"].map((account, index) => (
-            <section key={index} className="account">
-              <div className="account-content-wrapper">
-                <h3 className="account-title">Argent Bank {account} (x8349)</h3>
-                <p className="account-amount">$2,082.79</p>
-                <p className="account-amount-description">Available Balance</p>
-              </div>
-              <div className="account-content-wrapper cta">
-                <button className="transaction-button">
-                  View transactions
-                </button>
-              </div>
-            </section>
+            <AccountItem key={index} account={account} />
           ))}
         </main>
       )}

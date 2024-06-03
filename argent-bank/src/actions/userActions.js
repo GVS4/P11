@@ -21,25 +21,27 @@ export const fetchUserInfoSuccess = (userInfo) => ({
 });
 
 // Thunk actions
-export const loginUser = ({ email, password, rememberMe }) => async (dispatch) => {
-  try {
-    const response = await fetch(LOGIN_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
-    });
+export const loginUser =
+  ({ email, password, rememberMe }) =>
+  async (dispatch) => {
+    try {
+      const response = await fetch(LOGIN_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
 
-    if (!response.ok) throw new Error("Failed to login");
+      if (!response.ok) throw new Error("Failed to login");
 
-    const data = await response.json();
-    dispatch(loginSuccess(data.body.token));
+      const data = await response.json();
+      dispatch(loginSuccess(data.body.token));
 
-    if (rememberMe) localStorage.setItem("token", data.body.token);
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
-};
+      if (rememberMe) localStorage.setItem("token", data.body.token);
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  };
 
 export const fetchUserInfo = (token) => async (dispatch) => {
   try {
@@ -61,23 +63,25 @@ export const fetchUserInfo = (token) => async (dispatch) => {
   }
 };
 
-export const updateUserProfile = ({ userName, token }) => async (dispatch) => {
-  try {
-    const response = await fetch(PROFILE_URL, {
-      method: "PUT",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ userName }),
-    });
+export const updateUserProfile =
+  ({ userName, token }) =>
+  async (dispatch) => {
+    try {
+      const response = await fetch(PROFILE_URL, {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ userName }),
+      });
 
-    if (!response.ok) throw new Error("Failed to update profile");
+      if (!response.ok) throw new Error("Failed to update profile");
 
-    const data = await response.json();
-    dispatch(fetchUserInfoSuccess(data.body));
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
-};
+      const data = await response.json();
+      dispatch(fetchUserInfoSuccess(data.body));
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  };
