@@ -9,7 +9,7 @@ import Footer from './layout/Footer/Footer';
 function App() {
   return (
     <div className="app-container">
-      <Router>
+      <Router basename="/P11">
         <Header />
           <Routes>
             <Route path="/" element={<Home />} />
